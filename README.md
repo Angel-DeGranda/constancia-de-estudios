@@ -6,7 +6,7 @@ API REST con Spring Boot para tramitar constancias de estudios. Una sola solicit
 
 ## Integrantes
 
-- Angel David De Grnada Santos
+- Angel David De Granda Santos
 - Maria Fernanda León Díaz 
 
 ## Descripción de la solución
@@ -93,25 +93,6 @@ mvnw.cmd spring-boot:run
 
 La API queda en `http://localhost:8080`.
 
-## Datos de prueba
-
-La API no tiene endpoint para dar de alta estudiantes. Después de arrancar la aplicación una vez (para que se creen las tablas), ejecuta esto en MySQL:
-
-```sql
-USE constancia;
-
-INSERT INTO estudiante (matricula, nombre, correo, activo) VALUES
-  ('202400001', 'Ana López García',   'ana.lopez@correo.com',   true),
-  ('202400002', 'Carlos Pérez Ruiz',  'carlos.perez@correo.com', false),
-  ('202400003', 'María Torres Díaz',  'correo-invalido',         true);
-```
-
-| Matrícula | Caso de prueba |
-|---|---|
-| `202400001` | Estudiante activo: el flujo completo funciona |
-| `202400002` | Estudiante inactivo: se rechaza |
-| `202400003` | Correo sin `@`: falla al enviar la notificación y se hace rollback |
-
 ## Endpoints
 
 Todos los parámetros se envían como **query params** (no como body JSON).
@@ -168,13 +149,3 @@ Respuestas:
 **`GET /api/notificaciones/estudiante/{matricula}`**: historial de notificaciones enviadas a un estudiante.
 
 - `200 OK`: lista de notificaciones (lista vacía si no hay).
-
-## Pruebas con Postman
-
-Importa [constancia.postman_collection.json](constancia.postman_collection.json) en Postman (**Import → File**). La colección trae:
-
-- Variables `baseUrl` (`http://localhost:8080`), `matricula`, `matriculaInactiva`, `matriculaCorreoInvalido` y `matriculaInexistente`.
-- Peticiones para todos los endpoints, con casos de éxito y de error.
-- Tests automáticos que revisan el código de estado y los campos clave de cada respuesta.
-
-Para correr toda la colección: clic derecho en la colección → **Run collection**. Antes, carga los [datos de prueba](#datos-de-prueba).
